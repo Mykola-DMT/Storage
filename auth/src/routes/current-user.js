@@ -1,19 +1,8 @@
 const express = require('express')
-const jwt = require('jsonwebtoken')
+const {current_user} = require('../controllers/current-userController')
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-    if(!req.session?.jwt){
-        return res.send({ currentUser: null })
-    }
-
-    try{
-        const payload = jwt.verify(req.session.jwt, process.env.jwt_key)
-        res.send({ currentUser: payload })
-    }catch (err){
-        res.send({ currentUser: null })
-    }
-})
+router.get('/', current_user)
 
 module.exports = router

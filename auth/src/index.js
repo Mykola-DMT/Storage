@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const axios = require('axios')
 const cookieSession = require('cookie-session')
-const {router} = require('./routes/signup')
+
 
 
 const app = express()
@@ -23,8 +23,8 @@ app.use('/api/users/signin', require('./routes/signin'))
 app.use('/api/users/currentuser', require('./routes/current-user'))
 app.use('/api/users/signout', require('./routes/signout'))
 
-app.get('*', (req, res) => {
-    res.status(404).send('Not found')
+app.all('*', (req, res) => {
+    res.status(404).json({errors: [{message: 'Not found'}]})
 })
 
 const start = async () => {
