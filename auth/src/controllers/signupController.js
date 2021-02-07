@@ -7,7 +7,7 @@ exports.signup = async function(req, res){
     const errors = validationResult(req)
 
     if(!errors.isEmpty()){
-        return res.status(400).json({
+        return res.status(400).send({
             errors: errors.array().map(error => {
                 return { message: error.msg, field: error.param}
             })
@@ -18,7 +18,7 @@ exports.signup = async function(req, res){
 
     const existingUser = await User.findOne({email})
     if(existingUser){
-        return res.status(400).json({
+        return res.status(400).send({
             errors: [{message: 'Email in use'}]
         })
     }
