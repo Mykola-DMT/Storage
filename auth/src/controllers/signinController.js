@@ -18,14 +18,14 @@ exports.signin = async function(req, res){
 
     const existingUser = await User.findOne({email})
     if(!existingUser){
-        res.status(400).send({
+        return res.status(400).send({
             errors: [{message: 'Invalid credentials'}]
         })
     }
 
     const isMatch = await bcrypt.compare(password, existingUser.password)
     if(!isMatch){
-        res.status(400).send({
+        return res.status(400).send({
             errors: [{message: 'Invalid credentials'}]
         })
     }
