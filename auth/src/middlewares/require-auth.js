@@ -1,6 +1,6 @@
 const requireAuth = (req, res, next) => {
     if(!req.currentUser){
-        res.status(401).json({
+        return res.status(401).send({
             errors: [{message: 'Not authorized'}]
         })
     }
