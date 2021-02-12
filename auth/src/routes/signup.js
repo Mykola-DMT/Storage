@@ -20,4 +20,3 @@ router.get('/', (req, res) => {
 
 signupRouter = router
 module.exports = signupRouter
-//export {router as signupRouter}

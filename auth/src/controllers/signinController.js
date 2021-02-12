@@ -1,9 +1,10 @@
-const { validationResult } = require('express-validator')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const { validationResult } = require('express-validator')
 
 exports.signin = async function(req, res){
+
     const errors = validationResult(req)
 
     if(!errors.isEmpty()){
