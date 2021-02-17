@@ -14,7 +14,7 @@ build:
         dockerfile: dockerfile
       sync:
         manual:
-          - src: 'src/##/*.js'
+          - src: 'src/**/*.js'
             dest: .
     - image: mykoladubr/client
       context: client
@@ -23,4 +23,12 @@ build:
       sync:
         manual:
           - src: '**/*.js'
+            dest: .
+    - image: mykoladubr/types
+      context: types
+      docker:
+        dockerfile: dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
             dest: .

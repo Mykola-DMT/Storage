@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: types-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: types
+  template:
+    metadata:
+      labels:
+        app: types
+    spec:
+      containers:
+        - name: types
+          image: mykoladubr/types
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://types-mongo-srv:27017/types'
+            - name: jwt_key
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret-for-storage
+                  key: jwt_key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: types-srv
+spec:
+  selector:
+    app: types
+  ports:
+    - name: types
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
