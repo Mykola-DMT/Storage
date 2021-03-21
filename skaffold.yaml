@@ -32,3 +32,11 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
+    - image: mykoladubr/items
+      context: items
+      docker:
+        dockerfile: dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .

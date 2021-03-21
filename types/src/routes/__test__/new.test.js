@@ -1,6 +1,9 @@
 const request = require('supertest')
 const app = require('../../app')
 const Type = require('../../models/type')
+const natsWarpper = require('../../natsWrapper')
+
+jest.mock('../../natsWrapper')
 
 it('has a route handler listening to /api/types for post request', async() => {
     const response = await request(app)
@@ -71,3 +74,18 @@ it('creates a type with valid inputs', async() => {
     types = await Type.find({})
     expect(types.length).toEqual(1)
 })
+
+// it('publishes an ivent', async() =>{
+//     let types = await Type.find({})
+//     expect(types.length).toEqual(0)
+
+//     await request(app)
+//         .post('/api/types')
+//         .set('Cookie', global.signin())
+//         .send({
+//             title: 'asdf'
+//         })
+//         .expect(201)
+
+//         expect(natsWrapper.client.publish).toHaveBeenCalled()
+// })

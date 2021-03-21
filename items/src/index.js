@@ -16,7 +16,7 @@ const start = async () => {
 
     try{
 
-        await natsWrapper.connect('storage', 'types', 'http://nats-srv:4222')
+        await natsWrapper.connect('storage', 'items', 'http://nats-srv:4222')
 
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
@@ -30,7 +30,7 @@ const start = async () => {
     }
 
     app.listen(3000, () => {
-        console.log('Listening(Types) on 3000...');
+        console.log('Listening(Items) on 3000...');
     })
 }
 

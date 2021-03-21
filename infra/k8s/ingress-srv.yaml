@@ -18,6 +18,10 @@ spec:
             backend:
               serviceName: types-srv
               servicePort: 3000
+          - path: /api/items/?(.*)
+            backend:
+              serviceName: items-srv
+              servicePort: 3000
           - path: /?(.*)
             backend:
               serviceName: client-srv
