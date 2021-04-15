@@ -11,7 +11,7 @@ router.get('/', currentUser, async (req, res) => {
         })
     }
 
-    const items = await Item.find({ userId: req.currentUser.id }).sort({ isSold: 1 })
+    const items = await Item.find({ userId: req.currentUser.id })//.sort({ isSold: 1 })
     res.send(items)
 })
 

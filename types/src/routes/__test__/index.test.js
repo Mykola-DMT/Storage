@@ -1,4 +1,3 @@
-const { requireAuth } = require('@mdticketss/common')
 const request = require('supertest')
 const app = require('../../app')
 //const { router } from '../new')
@@ -12,7 +11,7 @@ const createType = () => {
         })
 }
 
-it('can only be accessed if the user is signed in', async()=>{
+it('can only be accessed if the user is signed in', async () => {
     await request(app)
         .get('/api/types')
         .send()

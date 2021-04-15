@@ -3,20 +3,25 @@ const app = require('./app')
 const natsWrapper = require('./natsWrapper')
 
 const start = async () => {
-    if(!process.env.jwt_key){
+    if (!process.env.jwt_key) {
         return res.status(400).send({
-            errors: [{message: 'JWT must be defined'}]
+            errors: [{ message: 'JWT must be defined' }]
         })
     }
-    if(!process.env.MONGO_URI){
+    if (!process.env.MONGO_URI) {
         return res.status(400).send({
-            errors: [{message: 'Mongo_URI must be defined'}]
+            errors: [{ message: 'Mongo_URI must be defined' }]
         })
     }
 
-    try{
+    try {
 
         await natsWrapper.connect('storage', 'items', 'http://nats-srv:4222')
+
+        natsWrapper.client.on('close', () => {
+            console.log('NATS connectuon closed')
+            process.exit()
+        })
 
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
@@ -24,8 +29,8 @@ const start = async () => {
             useCreateIndex: true
         })
         console.log('Connected to mongoDb');
-        
-    } catch(err){
+
+    } catch (err) {
         console.log(err)
     }
 

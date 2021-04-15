@@ -32,38 +32,29 @@ class NatsWrapper {
 
     }
 
-    publish(subject, data) {
-        return new Promise((resolve, reject) => {
-            this.client.publish(subject, JSON.stringify(data), (err) => {
-                if (err) {
-                    return reject(err)
-                }
-                console.log('Event published to subject', this.subject)
-                resolve()
-            })
-        })
-    }
-
 
     publish(subject, data) {
-        return new Promise((resolve, reject) => {
-            this.client.publish(subject, JSON.stringify(data), (err) => {
-                if (err) {
-                    console.log(err)
-                }
-                console.log('Event published to subject', this.subject)
-                resolve()
-            })
+        // return new Promise((resolve, reject) => {
+        this.client.publish(subject, JSON.stringify(data), (err) => {
+            if (err) {
+                console.log(err)
+            }
+            console.log('Event published to subject', subject)
+            //resolve()
         })
+        // })
     }
-    // publish(str,data){
-    //     this._client.publish(str, JSON.stringify(data), (err)=>{
-    //         if(err){
+
+    // publish(str, data) {
+    //     this._client.publish(str, JSON.stringify(data), (err) => {
+    //         if (err) {
     //             console.log(err)
     //         }
-    //         console.log('Event published',data.title)
+    //         console.log('Event published', data.title)
     //     })
     // }
 }
 
-module.exports = new NatsWrapper()
+const natsWrapper = new NatsWrapper()
+
+module.exports = natsWrapper

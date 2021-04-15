@@ -30,8 +30,9 @@ it('return a 401 if the user is not authenticated', async () => {
 })
 
 it('return a 401 if the user does not own the type', async () => {
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     const response = await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', global.signin())
         .send({
             name: 'test',
@@ -54,8 +55,9 @@ it('return a 401 if the user does not own the type', async () => {
 
 it('return a 400 if the user provided an invalid inputs', async () => {
     const cookie = global.signin()
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     const response = await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', cookie)
         .send({
             name: 'test',
@@ -91,8 +93,9 @@ it('return a 400 if the user provided an invalid inputs', async () => {
 
 it('updates the type provided valid inputs', async () => {
     const cookie = global.signin()
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     const response = await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', cookie)
         .send({
             name: 'test',
@@ -126,8 +129,9 @@ it('set date when item sold', async () => {
 
     var today = new Date()
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     const response = await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', cookie)
         .send({
             name: 'test',

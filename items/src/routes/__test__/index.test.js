@@ -1,13 +1,13 @@
-const { requireAuth } = require('@mdticketss/common')
 const request = require('supertest')
 const app = require('../../app')
+const mongoose = require('mongoose')
 //const { router } from '../new')
 
 
-
-const createType = (cookie) => {
+const createItem = (cookie) => {
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     return request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', cookie)
         .send({
             name: 'test',
@@ -26,9 +26,9 @@ it('can only be accessed if the user is signed in', async () => {
 
 it('can fetch a list of items', async () => {
     const cookie = global.signin()
-    await createType(cookie)
-    await createType(cookie)
-    await createType(cookie)
+    await createItem(cookie)
+    await createItem(cookie)
+    await createItem(cookie)
 
     const response = await request(app)
         .get('/api/items')

@@ -2,26 +2,30 @@ const request = require('supertest')
 const app = require('../../app')
 const Item = require('../../models/item')
 const natsWarpper = require('../../natsWrapper')
+const mongoose = require('mongoose')
 
 
 it('has a route handler listening to /api/items for post request', async () => {
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     const response = await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .send({})
     expect(response.status).not.toEqual(404)
 })
 
 it('can only be accessed if the user is signed in', async () => {
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     const response = await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .send({})
 
     expect(response.status).toEqual(401)
 })
 
 it('return a status other than 401 if user is signed in', async () => {
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     const response = await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', global.signin())
         .send({})
 
@@ -29,8 +33,10 @@ it('return a status other than 401 if user is signed in', async () => {
 })
 
 it('returns an error an invalid name is provided', async () => {
+
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', global.signin())
         .send({
             name: '',
@@ -43,8 +49,9 @@ it('returns an error an invalid name is provided', async () => {
 })
 
 it('returns an error an invalid price is provided', async () => {
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', global.signin())
         .send({
             name: 'test',
@@ -57,8 +64,9 @@ it('returns an error an invalid price is provided', async () => {
 })
 
 it('returns an error an invalid size is provided', async () => {
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', global.signin())
         .send({
             name: 'test',
@@ -74,8 +82,9 @@ it('creates a type with valid inputs', async () => {
     let items = await Item.find({})
     expect(items.length).toEqual(0)
 
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', global.signin())
         .send({
             name: 'asdf',

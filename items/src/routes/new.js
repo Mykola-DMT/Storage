@@ -4,10 +4,13 @@ const { body, validationResult } = require('express-validator')
 const natsWrapper = require('../natsWrapper')
 const { Stan } = require('node-nats-streaming')
 const Item = require('../models/item')
+const Publisher = require('../events/publishers/publisher')
+
+//jest.mock('../natsWrapper')
 
 const router = express.Router()
 
-router.post('/', currentUser, [
+router.post('/:typeId', currentUser, [
     body('name')
         .not()
         .isEmpty()
@@ -41,31 +44,48 @@ router.post('/', currentUser, [
         })
     }
 
+    const typeId = req.params.typeId
     const { name, size, price, isSold } = req.body
     let date = null
     if (isSold) {
-        date = Date.now()
+        //date = Date.now()
+        var today = new Date()
+        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     }
 
     const item = new Item({
-        name, size, price, date, isSold,
+        name, size, price, date, isSold, typeId,
         userId: req.currentUser.id
     })
 
     await item.save()
 
-    // await natsWrapper.publish('type:created', {
-    //     id: type.id,
-    //     title: type.title,
-    //     userId: type.userId
-    // })
+    // if (process.env.NODE_ENV !== 'test') {
+    //     await natsWrapper.publish('item:created', {
+    //         id: item.id,
+    //         name: item.name,
+    //         size: item.size,
+    //         price: item.price,
+    //         isSold: item.isSold,
+    //         date: item.date,
+    //         typeId: item.typeId,
+    //         userId: item.userId
+    //     })
+    // }
 
 
-    // await new Publisher(natsWrapper.client).publish('type:created', {
-    //     id: type.id,
-    //     title: type.title,
-    //     userId: type.userId
-    // })
+    if (process.env.NODE_ENV !== 'test') {
+        await new Publisher(natsWrapper.client).publish('item:created', {
+            id: item.id,
+            name: item.name,
+            size: item.size,
+            price: item.price,
+            isSold: item.isSold,
+            date: item.date,
+            typeId: item.typeId,
+            userId: item.userId
+        })
+    }
 
 
 

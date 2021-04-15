@@ -6,8 +6,7 @@ const itemSchema = new Schema({
     price: { type: Number, required: true },
     date: { type: String, required: false },
     isSold: { type: Boolean, required: true },
-    typeId: { type: Types.ObjectId, ref: 'Type' },
-    userId: { type: String, required: true }
+    typeId: { type: Types.ObjectId, ref: 'Type' }
 }, {
     toJSON: {
         transform(doc, ret) {

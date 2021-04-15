@@ -26,8 +26,9 @@ it('returns the type if the type is found', async () => {
     const price = 100
     const isSold = true
 
+    const typeId = new mongoose.Types.ObjectId().toHexString()
     const response = await request(app)
-        .post('/api/items')
+        .post(`/api/items/${typeId}`)
         .set('Cookie', global.signin())
         .send({
             name: name,

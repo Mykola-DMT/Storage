@@ -2,8 +2,8 @@ const { MongoMemoryServer } = require('mongodb-memory-server')
 const mongoose = require('mongoose')
 const request = require('supertest')
 const { app } = require('../app')
+const natsWrapper = require('../natsWrapper')
 const jwt = require('jsonwebtoken')
-//const jest = require('jest')
 
 jest.mock('../natsWrapper')
 
@@ -21,7 +21,8 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
-    jest.clearAllMocks()
+    //jest.clearAllMocks()
+    //natsWrapper.mockClear()
     const collections = await mongoose.connection.db.collections()
 
     for (let collection of collections) {

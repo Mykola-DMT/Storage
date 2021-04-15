@@ -2,6 +2,7 @@ const express = require('express')
 const { body, validationResult } = require('express-validator')
 const Item = require('../models/item')
 const { currentUser } = require('@mdticketss/common')
+const natsWrapper = require('../natsWrapper')
 
 const router = express.Router()
 
@@ -53,16 +54,31 @@ router.put('/:itemId', currentUser, [
 
     const { name, size, price, isSold } = req.body
 
-    let date = null
+    let date = existed.date
     if (existed.isSold === false && isSold) {
         var today = new Date()
         date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+    }
+
+    if (!isSold) {
+        date = null
     }
 
     existed.set({
         name, size, price, date, isSold
     })
     await existed.save()
+
+    if (process.env.NODE_ENV !== 'test') {
+        await natsWrapper.publish('item:updated', {
+            id: existed.id,
+            name: existed.name,
+            size: existed.size,
+            price: existed.price,
+            isSold: existed.isSold,
+            date: existed.date
+        })
+    }
 
     res.send(existed)
 })

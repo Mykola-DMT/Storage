@@ -2,15 +2,15 @@ const nats = require('node-nats-streaming')
 
 class NatsWrapper {
     _client
-    
+
     // constructor(client){
     //     this._client = client
     // }
 
     get client() {
         if (!this._client) {
-            return response.status(400).send({ 
-                errors: [{message:'Coannot access NATS client before connecting' }]
+            return response.status(400).send({
+                errors: [{ message: 'Coannot access NATS client before connecting' }]
             })
             //throw new Error('Coannot access NATS client before connecting')
         }
@@ -32,9 +32,9 @@ class NatsWrapper {
 
     }
 
-    publish(subject,data){
+    publish(subject, data) {
         return new Promise((resolve, reject) => {
-            this.client.publish(subject, JSON.stringify(data), (err)=>{
+            this.client.publish(subject, JSON.stringify(data), (err) => {
                 if (err) {
                     return reject(err)
                 }
@@ -42,6 +42,16 @@ class NatsWrapper {
                 resolve()
             })
         })
+    }
+
+    async onMessage(data, msg) {
+        const { id, title, price } = data
+        const ticket = Ticket.build({
+            id, title, price
+        })
+        await ticket.save()
+
+        msg.ack()
     }
 
     // publish(str,data){
@@ -53,5 +63,6 @@ class NatsWrapper {
     //     })
     // }
 }
+const natsWrapper = new NatsWrapper()
 
-module.exports = new NatsWrapper()
+module.exports = natsWrapper
