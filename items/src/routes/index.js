@@ -19,7 +19,6 @@ router.get('/', currentUser, async (req, res) => {
     for (i = 0; i < items.length; i++) {
         total += items[i].price
     }
-    console.log(total)
 
     resp = {
         totalToday: total, items

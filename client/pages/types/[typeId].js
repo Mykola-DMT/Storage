@@ -25,11 +25,15 @@ const TypeShow = ({ type, items }) => {
     })
 
     return <div>
-        <h1>{type.title}</h1>
-        <Link href="/items/new/[typeId]" as={`/items/new/${type.id}`}>
-            <button className="btn btn-outline-success">Add Item</button>
-        </Link>
-        <br />
+        <h1 align="center">{type.title}</h1>
+        <div className="d-flex flex-row flex-wrap justify-content-between">
+            <Link href="/items/new/[typeId]" as={`/items/new/${type.id}`}>
+                <button className="btn btn-outline-success">Add Item</button>
+            </Link>
+            <Link href="/types/edit/[typeId]" as={`/types/edit/${type.id}`}>
+                <button className="btn btn-primary  btn-sm">Rename</button>
+            </Link>
+        </div>
         <h2>Items:</h2>
         <table className="table">
             <thead>

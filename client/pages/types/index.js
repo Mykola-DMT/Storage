@@ -4,6 +4,7 @@ const TypeIndex = ({ types }) => {
 
     return (
         <div>
+            <br />
             <Link href="/types/new">
                 <button className="btn btn-outline-success">Add Type</button>
             </Link>

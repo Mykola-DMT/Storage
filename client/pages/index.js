@@ -12,16 +12,6 @@ const LandingPage = ({ currentUser, data }) => {
                 <td>{item.size}</td>
                 <td>{item.price}</td>
                 <td>{item.date}</td>
-                < td >
-                    <Link className="disabled-link" href="/items/[itemId]" as={`/items/${item.id}`}>
-                        <button
-                            type="button"
-                            className="btn btn-primary  btn-sm"
-                            disabled={!!item.date}
-                        >Edit</button>
-                    </Link>
-                </td >
-
             </tr >
         )
     })
@@ -39,8 +29,6 @@ const LandingPage = ({ currentUser, data }) => {
                             <th>Size</th>
                             <th>Price</th>
                             <th>Date</th>
-                            {/* <th>isSold</th> */}
-                            <th>Link</th>
                         </tr>
                     </thead>
                     <tbody>
