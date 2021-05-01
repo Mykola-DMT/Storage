@@ -21,7 +21,7 @@ router.get('/:id', currentUser, async (req, res) => {
     }
 
     const typeWithItems = {
-        title: type.title,
+        type: type,
         items: items
     }
 

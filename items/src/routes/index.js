@@ -10,9 +10,22 @@ router.get('/', currentUser, async (req, res) => {
             errors: [{ message: 'Not authorized' }]
         })
     }
+    var today = new Date()
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
-    const items = await Item.find({ userId: req.currentUser.id })//.sort({ isSold: 1 })
-    res.send(items)
+    const items = await Item.find({ userId: req.currentUser.id, date })//.sort({ isSold: 1 })
+
+    let total = 0
+    for (i = 0; i < items.length; i++) {
+        total += items[i].price
+    }
+    console.log(total)
+
+    resp = {
+        totalToday: total, items
+    }
+
+    res.send(resp)
 })
 
 

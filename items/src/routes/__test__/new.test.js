@@ -4,6 +4,7 @@ const Item = require('../../models/item')
 const natsWarpper = require('../../natsWrapper')
 const mongoose = require('mongoose')
 
+jest.mock('../../natsWrapper')
 
 it('has a route handler listening to /api/items for post request', async () => {
     const typeId = new mongoose.Types.ObjectId().toHexString()
