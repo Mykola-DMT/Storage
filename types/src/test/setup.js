@@ -34,10 +34,10 @@ afterAll(async () => {
     await mongoose.connection.close()
 })
 
-global.signin = () => {
+global.signin = (userId = undefined) => {
     //build a JWT payload. {id, email}
     const payload = {
-        id: new mongoose.Types.ObjectId().toHexString(),
+        id: userId || new mongoose.Types.ObjectId().toHexString(),
         email: 'test@test.com'
     }
 

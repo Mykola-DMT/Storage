@@ -1,6 +1,6 @@
 const request = require('supertest')
 const app = require('../../app')
-const mongoose = require( 'mongoose')
+const mongoose = require('mongoose')
 
 it('return a 404 if the provided id does not exist', async () => {
     const id = new mongoose.Types.ObjectId().toHexString()
@@ -81,5 +81,5 @@ it('updates the type provided valid inputs', async () => {
         .set('Cookie', global.signin())
         .send()
 
-    expect(typeResponse.body.title).toEqual('new title')
+    expect(typeResponse.body.type.title).toEqual('new title')
 })

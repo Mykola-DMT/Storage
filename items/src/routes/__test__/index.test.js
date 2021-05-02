@@ -36,5 +36,5 @@ it('can fetch a list of items', async () => {
         .send()
         .expect(200)
 
-    expect(response.body.length).toEqual(3)
+    expect(response.body.items.length).toEqual(3)
 })

@@ -17,7 +17,6 @@ const natsWrapper = {
     }
 }
 
-console.log('Connected to NATS _fake')
 //export default natsWrapper
 
 module.exports = natsWrapper

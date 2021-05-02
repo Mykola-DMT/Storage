@@ -9,7 +9,7 @@ router.get('/', currentUser, async (req, res) => {
         return res.status(401).send({ errors: [{ message: 'Not authorized' }] })
     }
 
-    const types = await Type.find({})
+    const types = await Type.find({ userId: req.currentUser.id })
 
     res.send(types)
 })
