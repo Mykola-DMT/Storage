@@ -18,7 +18,7 @@ const LandingPage = ({ currentUser, data }) => {
 
     return currentUser ? (
         <div>
-            <h4>Today is: {date}</h4>
+            <h4>Date: {date}</h4>
             <h4>Sold today for: {data.totalToday.toFixed(2)}</h4>
             <div>
                 <h2>Items:</h2>
