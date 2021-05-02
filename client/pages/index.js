@@ -19,7 +19,7 @@ const LandingPage = ({ currentUser, data }) => {
     return currentUser ? (
         <div>
             <h4>Today is: {date}</h4>
-            <h4>Sold today for: {data.totalToday}</h4>
+            <h4>Sold today for: {data.totalToday.toFixed(2)}</h4>
             <div>
                 <h2>Items:</h2>
                 <table className="table">
@@ -44,8 +44,11 @@ const LandingPage = ({ currentUser, data }) => {
 //To fetch some data in Next.js during 
 //the rendering process
 LandingPage.getInitialProps = async (context, client, currentUser) => {
-    const { data } = await client.get('/api/items')
-    return { data }
+    if (currentUser) {
+        const { data } = await client.get('/api/items')
+        return { data }
+    }
+    return { data: { items: [] } }
 }
 
 export default LandingPage

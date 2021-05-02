@@ -14,7 +14,7 @@ const NewItem = ({ typeId, currentUser }) => {
         body: {
             name, size, price, isSold
         },
-        onSuccess: () => Router.push(`/types/${typeId}`)
+        onSuccess: () => Router.push(`/types/${typeId}`, null, { shallow: true })
     })
 
     const onSubmit = (event) => {
