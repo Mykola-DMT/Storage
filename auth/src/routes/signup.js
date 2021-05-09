@@ -55,9 +55,6 @@ router.post('/',
         res.status(201).send(user)
     })
 
-router.get('/', (req, res) => {
-    res.send('work')
-})
 
 signupRouter = router
 module.exports = signupRouter
