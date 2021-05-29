@@ -33,7 +33,7 @@ const ItemEdit = ({ item }) => {
         setPrice(value.toFixed(2))
     }
     return <div>
-        <h1>Create an Item</h1>
+        <h1>Edit an Item</h1>
         <form onSubmit={onSubmit}>
             <div className="form-group">
                 <label>Name</label>

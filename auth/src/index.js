@@ -2,18 +2,19 @@ const mongoose = require('mongoose')
 const app = require('./app')
 
 const start = async () => {
-    if(!process.env.jwt_key){
+    console.log('Starting up...')
+    if (!process.env.jwt_key) {
         throw new Error('JWT must be defined')
     }
-    try{
+    try {
         await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
         })
         console.log('Connected to mongoDb');
-        
-    } catch(err){
+
+    } catch (err) {
         console.log(err)
     }
 
