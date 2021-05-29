@@ -13,7 +13,7 @@ router.get('/', currentUser, async (req, res) => {
     var today = new Date()
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
-    const items = await Item.find({ userId: req.currentUser.id, date })//.sort({ isSold: 1 })
+    const items = await Item.find({ userId: req.currentUser.id, date })
 
     let total = 0
     for (i = 0; i < items.length; i++) {
