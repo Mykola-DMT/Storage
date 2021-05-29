@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const app = require('./app')
 
 const start = async () => {
-    console.log('Starting up...')
     if (!process.env.jwt_key) {
         throw new Error('JWT must be defined')
     }
