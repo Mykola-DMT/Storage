@@ -5,6 +5,7 @@ const itemCreatedListener = require('./events/listeners/item-created-listener')
 const itemUpdatedListener = require('./events/listeners/item-update-listener')
 
 const start = async () => {
+    console.log('starting up...')
     if (!process.env.jwt_key) {
         return res.status(400).send({
             errors: [{ message: 'JWT must be defined' }]
